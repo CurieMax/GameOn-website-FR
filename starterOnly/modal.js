@@ -3,11 +3,12 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const btnCloseModal = document.querySelector(".close");
-const firstNameInput = document.querySelector("#first");
-const lastNameInput = document.querySelector("#last");
-const emailInput = document.querySelector("#email");
-const birthdateInput = document.querySelector("#birthdate");
-const quantityInput = document.querySelector("#quantity");
+const firstNameInput = document.querySelector(".first");
+const lastNameInput = document.querySelector(".last");
+const emailInput = document.querySelector(".email");
+const birthdateInput = document.querySelector(".birthdate");
+const quantityInput = document.querySelector(".quantity");
+const form = document.getElementById("reserve");
 
 
 function editNav() {
@@ -35,7 +36,7 @@ function closeModal(reset) {
 }
 
 function resetForm(){
-  document.getElementById("formulaire").reset();
+  document.getElementById("form").reset();
 }
 
 btnCloseModal.addEventListener("click", () => {
@@ -43,16 +44,36 @@ btnCloseModal.addEventListener("click", () => {
   resetForm()
 });
 
-// Validation firstName
-firstNameInput.addEventListener("invalid", (e) => inputErrorMessage(e, "Veuillez entrer 2 caractères ou plus pour le champ du prénom."));
-lastNameInput.addEventListener("invalid", (e) => inputErrorMessage(e, "Veuillez entrer 2 caractères ou plus pour le champ du nom."));
-emailInput.addEventListener("invalid", (e) => inputErrorMessage(e, "Veuillez entrez une adresse email valide."));
-birthdateInput.addEventListener("invalid", (e) => inputErrorMessage(e, "Vous devez entrer votre date de naissance."));
+// Validation form
 
-function inputErrorMessage(event, message) {
-  const target = event.target;
-  const parent = target.parentElement;
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  validInput();
+});
 
-  parent.setAttribute("data-error", message);
-  parent.setAttribute("data-error-visible", "true");
+
+// show error message
+
+const showErrorMessage = (ele, msg) => {
+  const inputControl = ele.parentElement;
+  const errormsg = inputControl.querySelector(".error");
+  errormsg.innerText = msg;
 }
+
+
+
+// validation input
+
+const validInput = () => {
+  const userEl = firstNameInput.value.trim();
+  console.log(userEl);
+
+  if (userEl === "") {
+    showErrorMessage(firstNameInput, "First Name cannot be empty");
+  }
+
+
+}
+
+
+

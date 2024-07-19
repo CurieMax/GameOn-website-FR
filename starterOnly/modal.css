@@ -236,6 +236,10 @@ input {
   text-align: left;
   line-height: 0.3;
 }
+
+.formData.errormsg  .text-control {
+  border: 1px solid red;
+}
 /* 
 input[data-error]::after {
     content: attr(data-error);

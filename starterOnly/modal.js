@@ -3,11 +3,11 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const btnCloseModal = document.querySelector(".close");
-const firstNameInput = document.querySelector(".first");
-const lastNameInput = document.querySelector(".last");
-const emailInput = document.querySelector(".email");
-const birthdateInput = document.querySelector(".birthdate");
-const quantityInput = document.querySelector(".quantity");
+const firstNameInput = document.getElementById("first");
+const lastNameInput = document.getElementById("last");
+const emailInput = document.getElementById("email");
+const birthdateInput = document.getElementById("birthdate");
+const quantityInput = document.getElementById("quantity");
 const form = document.getElementById("reserve");
 
 
@@ -36,7 +36,7 @@ function closeModal(reset) {
 }
 
 function resetForm(){
-  document.getElementById("form").reset();
+  document.querySelector(".form").reset();
 }
 
 btnCloseModal.addEventListener("click", () => {
@@ -58,6 +58,15 @@ const showErrorMessage = (ele, msg) => {
   const inputControl = ele.parentElement;
   const errormsg = inputControl.querySelector(".error");
   errormsg.innerText = msg;
+  inputControl.classList.add("errormsg");
+}
+
+// hide error message
+const hideErrorMessage = (ele) => {
+  const inputControl = ele.parentElement;
+  const errormsg = inputControl.querySelector(".error");
+  errormsg.innerText = "";
+  inputControl.classList.remove("errormsg");
 }
 
 
@@ -65,13 +74,41 @@ const showErrorMessage = (ele, msg) => {
 // validation input
 
 const validInput = () => {
-  const userEl = firstNameInput.value.trim();
-  console.log(userEl);
+  const validationFirstName = firstNameInput.value.trim();
+  const validationLastName = lastNameInput.value.trim();
+  const validationEmail = emailInput.value.trim();
+  const validationBirthdate = birthdateInput.value.trim();
+  
+  
 
-  if (userEl === "") {
-    showErrorMessage(firstNameInput, "First Name cannot be empty");
+  if (validationFirstName === "") {
+    showErrorMessage(firstNameInput, "Veuillez renseigner votre prénom");
+  } else if (validationFirstName.length < 2) {
+    showErrorMessage(firstNameInput, "Veuillez renseigner un nom valide");
+  } else {
+    hideErrorMessage(firstNameInput);
   }
 
+  if (validationLastName === "") {
+    showErrorMessage(lastNameInput, "Veuillez renseigner votre nom");
+  } else if (validationLastName.length < 2) {
+    showErrorMessage(lastNameInput, "Veuillez renseigner un nom valide");
+  } else {
+    hideErrorMessage(lastNameInput);
+  }
+
+  if (validationEmail === "") {
+    showErrorMessage(emailInput, "Veuillez renseigner votre email");
+  } else {
+    hideErrorMessage(emailInput);
+  }
+
+  if (validationBirthdate === "") {
+    showErrorMessage(birthdateInput, "Veuillez renseigner votre date de naissance");
+  } else {
+    hideErrorMessage(birthdateInput);
+  }
+  
 
 }
 

@@ -57,11 +57,11 @@
         <div class="content">
           <span class="close"></span>
           <div class="modal-body">
-            <form id="reserve" action="index.html" id="form">
+            <form id="reserve" action="index.html" class="form" onsubmit="return validInput()">
               <div class="formData">
                 <label>Prénom</label><br>
                 <input class="text-control" type="text" id="first" name="first" minlength="2"/><br>
-                <div class="error">erreur</div>
+                <div class="error"></div>
               </div>
               <div class="formData">
                 <label>Nom</label><br>

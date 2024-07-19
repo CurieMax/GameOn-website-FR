@@ -70,6 +70,28 @@ const hideErrorMessage = (ele) => {
 }
 
 
+// Step validation first name
+
+const isvalidFirstName = (firstName) => {
+  const reTest = /^[a-zA-Z]+$/;
+  return reTest.test(String(firstName).toLowerCase());
+}
+
+// Step validation last name
+
+const isvalidLastName = (lastName) => {
+  const reTest = /^[a-zA-Z]+$/;
+  return reTest.test(String(lastName).toLowerCase());
+}
+
+// Step Validation Email
+
+const isvalidEmail = (email) => {
+  const reTest = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return reTest.test(String(email).toLowerCase());
+}
+
+
 
 // validation input
 
@@ -79,29 +101,41 @@ const validInput = () => {
   const validationEmail = emailInput.value.trim();
   const validationBirthdate = birthdateInput.value.trim();
   
-  
+  // validation first name
 
   if (validationFirstName === "") {
     showErrorMessage(firstNameInput, "Veuillez renseigner votre prénom");
   } else if (validationFirstName.length < 2) {
-    showErrorMessage(firstNameInput, "Veuillez renseigner un nom valide");
+    showErrorMessage(firstNameInput, "Veuillez renseigner un prénom valide");
+  } else if (!isvalidFirstName(validationFirstName)) {
+    showErrorMessage(firstNameInput, "Veuillez renseigner un prénom valide");
   } else {
     hideErrorMessage(firstNameInput);
   }
+
+// validation last name
 
   if (validationLastName === "") {
     showErrorMessage(lastNameInput, "Veuillez renseigner votre nom");
   } else if (validationLastName.length < 2) {
     showErrorMessage(lastNameInput, "Veuillez renseigner un nom valide");
+  } else if (!isvalidLastName(validationLastName)) {
+    showErrorMessage(lastNameInput, "Veuillez renseigner un nom valide");
   } else {
     hideErrorMessage(lastNameInput);
   }
 
+// validation email
+
   if (validationEmail === "") {
     showErrorMessage(emailInput, "Veuillez renseigner votre email");
-  } else {
+  } else if (!isvalidEmail(validationEmail)) {
+    showErrorMessage(emailInput, "Veuillez entrer un email valide"); 
+  }else {
     hideErrorMessage(emailInput);
   }
+
+// validation birthdate
 
   if (validationBirthdate === "") {
     showErrorMessage(birthdateInput, "Veuillez renseigner votre date de naissance");

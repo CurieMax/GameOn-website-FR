@@ -9,7 +9,7 @@ const emailInput = document.getElementById("email");
 const birthdateInput = document.getElementById("birthdate");
 const quantityInput = document.getElementById("quantity");
 const form = document.getElementById("reserve");
-
+const checkbox = document.querySelectorAll(".checkbox-input");
 
 function editNav() {
   var x = document.getElementById("myTopnav");
@@ -48,8 +48,12 @@ btnCloseModal.addEventListener("click", () => {
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  validInput();
+  if (isvalidFirstName(firstNameInput.value) && isvalidLastName(lastNameInput.value) && isvalidEmail(emailInput.value)) {
+    closeModal(false)
+    resetForm()
+  }
 });
+
 
 
 // show error message
@@ -99,7 +103,7 @@ const validInput = () => {
   const validationFirstName = firstNameInput.value.trim();
   const validationLastName = lastNameInput.value.trim();
   const validationEmail = emailInput.value.trim();
-  const validationBirthdate = birthdateInput.value.trim();
+  //const validationBirthdate = birthdateInput.value.trim();
   
   // validation first name
 
@@ -137,14 +141,22 @@ const validInput = () => {
 
 // validation birthdate
 
-  if (validationBirthdate === "") {
-    showErrorMessage(birthdateInput, "Veuillez renseigner votre date de naissance");
-  } else {
-    hideErrorMessage(birthdateInput);
-  }
+  //if (validationBirthdate === "") {
+    //showErrorMessage(birthdateInput, "Veuillez renseigner votre date de naissance");
+  //} else {
+    //hideErrorMessage(birthdateInput);
+  //}
   
 
+
+
 }
+
+// Keep data in localStorage
+
+firstNameInput.value = localStorage.getItem("first");
+lastNameInput.value = localStorage.getItem("last");
+emailInput.value = localStorage.getItem("email");
 
 
 

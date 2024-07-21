@@ -31,7 +31,7 @@ function launchModal() {
 }
 
 // close modal form
-function closeModal(reset) {
+function closeModal() {
   modalbg.style.display = "none"
 }
 
@@ -44,14 +44,14 @@ btnCloseModal.addEventListener("click", () => {
   resetForm()
 });
 
-// Validation form
+// Submit form
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  if (isvalidFirstName(firstNameInput.value) && isvalidLastName(lastNameInput.value) && isvalidEmail(emailInput.value)) {
-    closeModal(false)
-    resetForm()
-  }
+  checkValidationFirstName();
+  checkValidationLastName();
+  checkValidationEmail();
+  
 });
 
 
@@ -76,60 +76,55 @@ const hideErrorMessage = (ele) => {
 
 // Step validation first name
 
-const isvalidFirstName = (firstName) => {
-  const reTest = /^[a-zA-Z]+$/;
-  return reTest.test(String(firstName).toLowerCase());
+function checkValidationFirstName() {
+  const isvalidFirstName = (firstName) => {
+    const reTest = /^[a-zA-Z]+$/;
+    return reTest.test(String(firstName).toLowerCase());
+  }
+const validationFirstName = firstNameInput.value.trim();
+if (validationFirstName === "") {
+  showErrorMessage(firstNameInput, "Veuillez renseigner votre prénom");
+} else if (validationFirstName.length < 2) {
+  showErrorMessage(firstNameInput, "Veuillez renseigner un prénom valide");
+} else if (!isvalidFirstName(validationFirstName)) {
+  showErrorMessage(firstNameInput, "Veuillez renseigner un prénom valide");
+} else {
+  hideErrorMessage(firstNameInput);
 }
+}
+
+
+
 
 // Step validation last name
 
-const isvalidLastName = (lastName) => {
-  const reTest = /^[a-zA-Z]+$/;
-  return reTest.test(String(lastName).toLowerCase());
+function checkValidationLastName() {
+  const isvalidLastName = (lastName) => {
+    const reTest = /^[a-zA-Z]+$/;
+    return reTest.test(String(lastName).toLowerCase());
+  }
+const validationLastName = lastNameInput.value.trim();
+if (validationLastName === "") {
+  showErrorMessage(lastNameInput, "Veuillez renseigner votre nom");
+} else if (validationLastName.length < 2) {
+  showErrorMessage(lastNameInput, "Veuillez renseigner un nom valide");
+} else if (!isvalidLastName(validationLastName)) {
+  showErrorMessage(lastNameInput, "Veuillez renseigner un nom valide");
+} else {
+  hideErrorMessage(lastNameInput);
+}
 }
 
 // Step Validation Email
 
-const isvalidEmail = (email) => {
-  const reTest = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return reTest.test(String(email).toLowerCase());
-}
 
-
-
-// validation input
-
-const validInput = () => {
-  const validationFirstName = firstNameInput.value.trim();
-  const validationLastName = lastNameInput.value.trim();
-  const validationEmail = emailInput.value.trim();
-  //const validationBirthdate = birthdateInput.value.trim();
+function checkValidationEmail() {
+  const isvalidEmail = (email) => {
+    const reTest = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return reTest.test(String(email).toLowerCase());
+  }
   
-  // validation first name
-
-  if (validationFirstName === "") {
-    showErrorMessage(firstNameInput, "Veuillez renseigner votre prénom");
-  } else if (validationFirstName.length < 2) {
-    showErrorMessage(firstNameInput, "Veuillez renseigner un prénom valide");
-  } else if (!isvalidFirstName(validationFirstName)) {
-    showErrorMessage(firstNameInput, "Veuillez renseigner un prénom valide");
-  } else {
-    hideErrorMessage(firstNameInput);
-  }
-
-// validation last name
-
-  if (validationLastName === "") {
-    showErrorMessage(lastNameInput, "Veuillez renseigner votre nom");
-  } else if (validationLastName.length < 2) {
-    showErrorMessage(lastNameInput, "Veuillez renseigner un nom valide");
-  } else if (!isvalidLastName(validationLastName)) {
-    showErrorMessage(lastNameInput, "Veuillez renseigner un nom valide");
-  } else {
-    hideErrorMessage(lastNameInput);
-  }
-
-// validation email
+  const validationEmail = emailInput.value.trim();
 
   if (validationEmail === "") {
     showErrorMessage(emailInput, "Veuillez renseigner votre email");
@@ -139,17 +134,30 @@ const validInput = () => {
     hideErrorMessage(emailInput);
   }
 
-// validation birthdate
 
-  //if (validationBirthdate === "") {
-    //showErrorMessage(birthdateInput, "Veuillez renseigner votre date de naissance");
-  //} else {
-    //hideErrorMessage(birthdateInput);
-  //}
+}
+
+// Step Validation Birthdate
+
+function checkValidationBirthdate() {
+  const validationBirthdate = birthdateInput.value.trim();
+  if (validationBirthdate === "") {
+    showErrorMessage(birthdateInput, "Veuillez renseigner votre date de naissance");
+  } else {
+    hideErrorMessage(birthdateInput);
+  }
+}
+
+
+
+// validation input
+
+const validInput = () => {
   
-
-
-
+checkValidationFirstName();
+checkValidationLastName();
+checkValidationEmail();
+checkValidationBirthdate();
 }
 
 // Keep data in localStorage

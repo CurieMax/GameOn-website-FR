@@ -10,6 +10,7 @@ const birthdateInput = document.getElementById("birthdate");
 const quantityInput = document.getElementById("quantity");
 const form = document.getElementById("reserve");
 const checkbox = document.querySelectorAll(".checkbox-input");
+const errorClass  = document.querySelectorAll(".error");
 
 function editNav() {
   var x = document.getElementById("myTopnav");
@@ -32,7 +33,8 @@ function launchModal() {
 
 // close modal form
 function closeModal() {
-  modalbg.style.display = "none"
+  modalbg.style.display = "none";
+  resetForm();
 }
 
 function resetForm(){
@@ -42,17 +44,20 @@ function resetForm(){
 btnCloseModal.addEventListener("click", () => {
   closeModal(true)
   resetForm()
+  errorClass.forEach((ele) => {
+    hideErrorMessage(ele);
+  })
 });
 
 // Submit form
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  checkValidationFirstName();
-  checkValidationLastName();
-  checkValidationEmail();
   
-});
+  if (validInput()) {
+    form.submit();
+  }
+})
 
 
 
@@ -107,7 +112,7 @@ const validationLastName = lastNameInput.value.trim();
 if (validationLastName === "") {
   showErrorMessage(lastNameInput, "Veuillez renseigner votre nom");
 } else if (validationLastName.length < 2) {
-  showErrorMessage(lastNameInput, "Veuillez renseigner un nom valide");
+  showErrorMessage(lastNameInput, "Veuillez entrer 2 caractères ou plus pour le champ du nom");
 } else if (!isvalidLastName(validationLastName)) {
   showErrorMessage(lastNameInput, "Veuillez renseigner un nom valide");
 } else {
@@ -142,22 +147,32 @@ function checkValidationEmail() {
 function checkValidationBirthdate() {
   const validationBirthdate = birthdateInput.value.trim();
   if (validationBirthdate === "") {
-    showErrorMessage(birthdateInput, "Veuillez renseigner votre date de naissance");
+    showErrorMessage(birthdateInput, "Vous devez entrer votre date de naissance");
   } else {
     hideErrorMessage(birthdateInput);
   }
 }
 
 
+function checkValidationQuantity() {
+  const validationQuantity = quantityInput.value.trim();
+  if (validationQuantity === "") {
+    showErrorMessage(quantityInput, "Veuillez renseigner un nombre");
+  } else {
+    hideErrorMessage(quantityInput);
+  }
+}
+
 
 // validation input
 
-const validInput = () => {
+function validInput() {
   
 checkValidationFirstName();
 checkValidationLastName();
 checkValidationEmail();
 checkValidationBirthdate();
+checkValidationQuantity();
 }
 
 // Keep data in localStorage

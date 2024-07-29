@@ -56,6 +56,8 @@ form.addEventListener("submit", (e) => {
 
   if (validInput()) {
     afterSubmit();
+    getData();
+    saveData();
     return true;
   } else {
     return false;
@@ -237,8 +239,25 @@ function afterSubmit() {
   confirmationMessage.style.display = "block";
 }
 
-// Keep data in localStorage
+// Get data in localStorage
 
-firstNameInput.value = localStorage.getItem("first");
-lastNameInput.value = localStorage.getItem("last");
-emailInput.value = localStorage.getItem("email");
+function getData() {
+  firstNameInput.value = localStorage.getItem("first");
+  lastNameInput.value = localStorage.getItem("last");
+  emailInput.value = localStorage.getItem("email");
+  birthdateInput.value = localStorage.getItem("birthdate");
+  quantityInput.value = localStorage.getItem("quantity");
+}
+
+// Save data in localStorage
+
+function saveData() {
+  localStorage.setItem("first", firstNameInput.value);
+  localStorage.setItem("last", lastNameInput.value);
+  localStorage.setItem("email", emailInput.value);
+  localStorage.setItem("birthdate", birthdateInput.value);
+  localStorage.setItem("quantity", quantityInput.value);
+}
+
+
+

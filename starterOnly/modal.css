@@ -69,12 +69,17 @@ img {
 }
 
 @media screen and (max-width: 1024px) {
+  .topnav .icon:hover {
+    background-color: white;
+  }
+
   .topnav a {
     display: none;
   }
   .topnav a.icon {
     float: right;
     display: block;
+    color: red;
   }
 }
 
@@ -101,7 +106,9 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
+    color: red;
   }
+
 }
 
 main {
@@ -493,6 +500,10 @@ footer {
   margin: 0 20px;
 }
 @media screen and (max-width: 1024px) {
+.main-navbar {
+  margin-right: 2em;
+}
+
   .hero-section {
     display: block;
     box-shadow: unset;
@@ -545,6 +556,8 @@ footer {
 
 #confirmationMessage {
   display: none;
-  padding-top: 16em;
-  padding-bottom: 16em;
+  padding-top: 13em;
+  padding-bottom: 13em;
+  text-align: center;
+  font-size: 30px;
 }

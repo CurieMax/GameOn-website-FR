@@ -11,6 +11,7 @@ const quantityInput = document.getElementById("quantity");
 const form = document.getElementById("reserve");
 const errorClass = document.querySelectorAll(".error");
 const confirmationMessage = document.getElementById("confirmationMessage");
+const confirmationCloseBtn = document.getElementById("closeBtn");
 
 function editNav() {
   var x = document.getElementById("myTopnav");
@@ -21,50 +22,40 @@ function editNav() {
   }
 }
 
-// launch modal event
+/**
+ * C'est la fonction qui permet d'ouvrir le modal
+ */
+
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-// launch modal form
+/**
+ * C'est la fonction qui permet d'afficher le modal
+ */
 function launchModal() {
   modalbg.style.display = "block";
 }
 
-// close modal form
+/**
+ * C'est la fonction qui permet de fermer le modal
+ */
 function closeModal() {
   modalbg.style.display = "none";
   resetForm();
   form.style.display = "block";
   confirmationMessage.style.display = "none";
+  confirmationCloseBtn.style.display = "none";
 }
 
+/**
+ * C'est la fonction qui permet de reinitialiser le formulaire
+ */
 function resetForm() {
   document.querySelector(".form").reset();
 }
 
-btnCloseModal.addEventListener("click", () => {
-  closeModal(true);
-  resetForm();
-  errorClass.forEach((ele) => {
-    hideErrorMessage(ele);
-  });
-});
-
-// Submit form
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  if (validInput()) {
-    afterSubmit();
-    getData();
-    saveData();
-    return true;
-  } else {
-    return false;
-  }
-});
-
-// show error message
+/**
+ * C'est la fonction qui permet d'afficher le message d'erreur
+ */
 
 const showErrorMessage = (ele, msg) => {
   const inputControl = ele.parentElement;
@@ -73,7 +64,9 @@ const showErrorMessage = (ele, msg) => {
   inputControl.classList.add("errormsg");
 };
 
-// hide error message
+/**
+ * C'est la fonction qui permet de cacher le message d'erreur
+ */
 const hideErrorMessage = (ele) => {
   const inputControl = ele.parentElement;
   const errormsg = inputControl.querySelector(".error");
@@ -81,7 +74,9 @@ const hideErrorMessage = (ele) => {
   inputControl.classList.remove("errormsg");
 };
 
-// Step validation first name
+/**
+ * C'est la fonction qui permet de valider le prénom
+ */
 
 function checkValidationFirstName() {
   const isvalidFirstName = (firstName) => {
@@ -91,8 +86,14 @@ function checkValidationFirstName() {
   const validationFirstName = firstNameInput.value.trim();
   if (validationFirstName === "") {
     showErrorMessage(firstNameInput, "Veuillez renseigner votre prénom");
+
+    return false;
   } else if (validationFirstName.length < 2) {
-    showErrorMessage(firstNameInput, "Veuillez renseigner un prénom valide");
+    showErrorMessage(
+      firstNameInput,
+      "Veuillez renseigner un prénom de plus de 2 caractères"
+    );
+    return false;
   } else if (!isvalidFirstName(validationFirstName)) {
     showErrorMessage(firstNameInput, "Veuillez renseigner un prénom valide");
     return false;
@@ -103,7 +104,9 @@ function checkValidationFirstName() {
   return true;
 }
 
-// Step validation last name
+/**
+ * C'est la fonction qui permet de valider le nom
+ */
 
 function checkValidationLastName() {
   const isvalidLastName = (lastName) => {
@@ -128,7 +131,10 @@ function checkValidationLastName() {
   return true;
 }
 
-// Step Validation Email
+/**
+ * C'est la fonction qui permet de valider l'email
+ * Avec une expression régulière
+ */
 
 function checkValidationEmail() {
   const isvalidEmail = (email) => {
@@ -151,9 +157,21 @@ function checkValidationEmail() {
   return true;
 }
 
-// Step Validation Birthdate
+/**
+ * C'est la fonction qui permet de valider la date de naissance
+ * Avec un age minimum de 18 ans
+ */
 
 function checkValidationBirthdate() {
+  const valueBirthdateInput = document.getElementById("birthdate").value;
+  const birthdate = new Date(valueBirthdateInput);
+  const today = new Date();
+  const age = today.getFullYear() - birthdate.getFullYear();
+  if (age < 18) {
+    showErrorMessage(birthdateInput, "Vous devez avoir 18 ans ou plus");
+    return false;
+  }
+
   const validationBirthdate = birthdateInput.value.trim();
   if (validationBirthdate === "") {
     showErrorMessage(
@@ -168,7 +186,9 @@ function checkValidationBirthdate() {
   return true;
 }
 
-// Step Validation quantity
+/**
+ * C'est la fonction qui permet de valider le nombre de tournois
+ */
 
 function checkValidationQuantity() {
   const validationQuantity = quantityInput.value.trim();
@@ -182,82 +202,116 @@ function checkValidationQuantity() {
   return true;
 }
 
-// Step Validation checkbox
+/**
+ * C'est la fonction qui permet de valider les boutons radio
+ *
+ */
 
-function checkValidationCheckbox(location) {
+function checkValidationCheckbox() {
   const radios = document.getElementsByName("location");
   for (let i = 0; i < radios.length; i++) {
     if (radios[i].checked) {
+      hideErrorMessage(radios[i]);
       return true;
     }
   }
+
+  showErrorMessage(radios[0], "Veuillez selectionner un tournoi");
   return false;
 }
 
-// step validation conditions
+/**
+ * C'est la fonction qui permet de valider les conditions
+ *
+ */
 
 function checkValidationConditions() {
   const validationCondition1 = document.getElementById("checkbox1");
   const validationCondition2 = document.getElementById("checkbox2");
   const validationCondition = [validationCondition1, validationCondition2];
 
-  // si validationcondition1 n'est pas checked, envoie un message d'erreur
   if (!validationCondition1.checked) {
     showErrorMessage(validationCondition1, "Veuillez accepter les conditions");
     return false;
   } else {
     hideErrorMessage(validationCondition1);
-  } 
+  }
 
   return true;
-
-  
-  
 }
 
-// validation input
+/**
+ * C'est la fonction qui sera appelée à l'envoi du formulaire.
+ * Cela permet de valider les champs
+ */
 
 function validInput() {
+  let isvalidFirstName = checkValidationFirstName();
+  let isvalidLastName = checkValidationLastName();
+  let isvalidEmail = checkValidationEmail();
+  let isvalidBirthdate = checkValidationBirthdate();
+  let isvalidQuantity = checkValidationQuantity();
+  let isvalidCheckbox = checkValidationCheckbox();
+  let isvalidConditions = checkValidationConditions();
   if (
-    checkValidationFirstName() &&
-    checkValidationLastName() &&
-    checkValidationEmail() &&
-    checkValidationBirthdate() &&
-    checkValidationQuantity() &&
-    checkValidationCheckbox() &&
-    checkValidationConditions()
+    isvalidFirstName &&
+    isvalidLastName &&
+    isvalidEmail &&
+    isvalidBirthdate &&
+    isvalidQuantity &&
+    isvalidCheckbox &&
+    isvalidConditions
   ) {
     return true;
   }
   return false;
 }
 
-// After submitting the form
-
+/**
+ * C'est la fonction qui sera appelée à la fin de la soumission du formulaire.
+ * Cela permet d'afficher le message de confirmation
+ * et de fermer le modal
+ */
 function afterSubmit() {
   form.style.display = "none";
   confirmationMessage.style.display = "block";
+  confirmationCloseBtn.style.display = "block";
+  confirmationCloseBtn.addEventListener("click", () => {
+    closeModal();
+    resetForm();
+    errorClass.forEach((ele) => {
+      hideErrorMessage(ele);
+    });
+  });
 }
 
-// Get data in localStorage
+/**
+ *
+ */
 
-function getData() {
-  firstNameInput.value = localStorage.getItem("first");
-  lastNameInput.value = localStorage.getItem("last");
-  emailInput.value = localStorage.getItem("email");
-  birthdateInput.value = localStorage.getItem("birthdate");
-  quantityInput.value = localStorage.getItem("quantity");
+function init() {
+  btnCloseModal.addEventListener("click", () => {
+    closeModal(true);
+    resetForm();
+    errorClass.forEach((ele) => {
+      hideErrorMessage(ele);
+    });
+  });
+
+  /**
+   * C'est la fonction qui sera appelée à la soumission du formulaire.
+   *
+   */
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    if (validInput()) {
+      afterSubmit();
+      return true;
+    } else {
+      return false;
+    }
+  });
 }
 
-// Save data in localStorage
-
-function saveData() {
-  localStorage.setItem("first", firstNameInput.value);
-  localStorage.setItem("last", lastNameInput.value);
-  localStorage.setItem("email", emailInput.value);
-  localStorage.setItem("birthdate", birthdateInput.value);
-  localStorage.setItem("quantity", quantityInput.value);
-}
-
-
-
+init();

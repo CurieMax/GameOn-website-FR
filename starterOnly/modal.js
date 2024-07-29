@@ -195,13 +195,22 @@ function checkValidationCheckbox(location) {
 // step validation conditions
 
 function checkValidationConditions() {
-  const validationCondition = document.getElementsByName("conditions");
-  for (let i = 0; i < validationCondition.length; i++) {
-    if (validationCondition[i].checked) {
-      return true;
-    }
-  }
-  return false;
+  const validationCondition1 = document.getElementById("checkbox1");
+  const validationCondition2 = document.getElementById("checkbox2");
+  const validationCondition = [validationCondition1, validationCondition2];
+
+  // si validationcondition1 n'est pas checked, envoie un message d'erreur
+  if (!validationCondition1.checked) {
+    showErrorMessage(validationCondition1, "Veuillez accepter les conditions");
+    return false;
+  } else {
+    hideErrorMessage(validationCondition1);
+  } 
+
+  return true;
+
+  
+  
 }
 
 // validation input

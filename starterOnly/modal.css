@@ -101,7 +101,6 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
-    margin-top: -15px;
   }
 }
 
@@ -510,12 +509,14 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 4.5rem;
+    font-size: 3rem;
     white-space: normal;
+    text-align: center;
   }
   .hero-text {
     width: unset;
     font-size: 1.5rem;
+    text-align: center;
   }
   .hero-img img {
     border-radius: 10px;

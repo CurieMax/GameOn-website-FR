@@ -12,6 +12,7 @@ const form = document.getElementById("reserve");
 const errorClass = document.querySelectorAll(".error");
 const confirmationMessage = document.getElementById("confirmationMessage");
 const confirmationCloseBtn = document.getElementById("closeBtn");
+const affichageMenu = document.querySelector(".choice-link");
 
 function editNav() {
   var x = document.getElementById("myTopnav");
@@ -34,6 +35,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 function launchModal() {
   modalbg.style.display = "block";
   confirmationCloseBtn.style.display = "none";
+  affichageMenu.style.display = "none";
 }
 
 /**
@@ -45,6 +47,7 @@ function closeModal() {
   form.style.display = "block";
   confirmationMessage.style.display = "none";
   confirmationCloseBtn.style.display = "none";
+  affichageMenu.style.display = "block";
 }
 
 /**

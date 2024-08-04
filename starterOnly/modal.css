@@ -503,6 +503,7 @@ footer {
     float: none;
     display: block;
     text-align: left;
+    margin-right: 3em;
   }
 }
 
@@ -543,10 +544,10 @@ footer {
 
 @media screen and (max-width: 1024px) {
   .main-navbar {
-    margin-right: 2em;
+    
   }
   .choice-link {
-    box-shadow: 0 2px 7px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 6px 0px rgba(0, 0, 0, 0.2);
     border-radius: 15px;
     margin-right: 1em;
     

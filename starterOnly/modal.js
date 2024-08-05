@@ -290,7 +290,7 @@ function afterSubmit() {
 }
 
 /**
- *
+ * Initialisation 
  */
 
 function init() {

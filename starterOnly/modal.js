@@ -12,7 +12,7 @@ const form = document.getElementById("reserve");
 const errorClass = document.querySelectorAll(".error");
 const confirmationMessage = document.getElementById("confirmationMessage");
 const confirmationCloseBtn = document.getElementById("closeBtn");
-const affichageMenu = document.querySelector(".choice-link");
+const affichageHero = document.querySelector(".hero-section");
 
 function editNav() {
   var x = document.getElementById("myTopnav");
@@ -35,7 +35,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 function launchModal() {
   modalbg.style.display = "block";
   confirmationCloseBtn.style.display = "none";
-  affichageMenu.style.display = "none";
+  affichageHero.style.display = "none";
 }
 
 /**
@@ -47,7 +47,7 @@ function closeModal() {
   form.style.display = "block";
   confirmationMessage.style.display = "none";
   confirmationCloseBtn.style.display = "none";
-  affichageMenu.style.display = "block";
+  affichageHero.style.display = "";
 }
 
 /**
@@ -170,6 +170,8 @@ function checkValidationBirthdate() {
   const valueBirthdateInput = document.getElementById("birthdate").value;
   const birthdate = new Date(valueBirthdateInput);
   const today = new Date();
+  
+  
   const age = today.getFullYear() - birthdate.getFullYear();
   if (age < 18) {
     showErrorMessage(birthdateInput, "Vous devez avoir 18 ans ou plus");
@@ -193,7 +195,6 @@ function checkValidationBirthdate() {
 /**
  * C'est la fonction qui permet de valider le nombre de tournois
  */
-
 function checkValidationQuantity() {
   const validationQuantity = quantityInput.value.trim();
   if (validationQuantity === "") {
@@ -207,10 +208,26 @@ function checkValidationQuantity() {
 }
 
 /**
+ * Permet l'écoute de l'input pour autoriser uniquement des chiffres
+ */
+quantityInput.addEventListener("keydown", (event) => {
+  let checkKeyboard = event
+  if (
+    (checkKeyboard < 48 || checkKeyboard > 56) && //chifres
+    (checkKeyboard < 96 || checkKeyboard > 105) && //pavé numériques
+    checkKeyboard !== 8  //backspace
+    
+
+  ){
+    event.preventDefault();
+  }
+});
+
+
+/**
  * C'est la fonction qui permet de valider les boutons radio
  *
  */
-
 function checkValidationCheckbox() {
   const radios = document.getElementsByName("location");
   for (let i = 0; i < radios.length; i++) {

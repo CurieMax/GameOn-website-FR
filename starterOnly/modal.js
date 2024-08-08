@@ -13,6 +13,7 @@ const errorClass = document.querySelectorAll(".error");
 const confirmationMessage = document.getElementById("confirmationMessage");
 const confirmationCloseBtn = document.getElementById("closeBtn");
 const affichageHero = document.querySelector(".hero-section");
+const bodyElement = document.body;
 
 function editNav() {
   var x = document.getElementById("myTopnav");
@@ -35,7 +36,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 function launchModal() {
   modalbg.style.display = "block";
   confirmationCloseBtn.style.display = "none";
-  affichageHero.style.display = "none";
+  bodyElement.classList.add("stop-scrolling");
 }
 
 /**
@@ -47,7 +48,7 @@ function closeModal() {
   form.style.display = "block";
   confirmationMessage.style.display = "none";
   confirmationCloseBtn.style.display = "none";
-  affichageHero.style.display = "";
+  bodyElement.classList.remove("stop-scrolling");
 }
 
 /**
@@ -84,7 +85,7 @@ const hideErrorMessage = (ele) => {
 
 function checkValidationFirstName() {
   const isvalidFirstName = (firstName) => {
-    const reTest = /^[a-zA-Z]+$/;
+    const reTest = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/;
     return reTest.test(String(firstName).toLowerCase());
   };
   const validationFirstName = firstNameInput.value.trim();
@@ -114,7 +115,7 @@ function checkValidationFirstName() {
 
 function checkValidationLastName() {
   const isvalidLastName = (lastName) => {
-    const reTest = /^[a-zA-Z]+$/;
+    const reTest = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/;
     return reTest.test(String(lastName).toLowerCase());
   };
   const validationLastName = lastNameInput.value.trim();
@@ -170,8 +171,7 @@ function checkValidationBirthdate() {
   const valueBirthdateInput = document.getElementById("birthdate").value;
   const birthdate = new Date(valueBirthdateInput);
   const today = new Date();
-  
-  
+
   const age = today.getFullYear() - birthdate.getFullYear();
   if (age < 18) {
     showErrorMessage(birthdateInput, "Vous devez avoir 18 ans ou plus");
@@ -211,18 +211,27 @@ function checkValidationQuantity() {
  * Permet l'écoute de l'input pour autoriser uniquement des chiffres
  */
 quantityInput.addEventListener("keydown", (event) => {
-  let checkKeyboard = event
   if (
-    (checkKeyboard < 48 || checkKeyboard > 56) && //chifres
-    (checkKeyboard < 96 || checkKeyboard > 105) && //pavé numériques
-    checkKeyboard !== 8  //backspace
-    
-
-  ){
+    [8, 46, 9, 27, 13].indexOf(event.keyCode) !== -1 ||
+    // Autoriser: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+    (event.keyCode === 65 && event.ctrlKey === true) ||
+    (event.keyCode === 67 && event.ctrlKey === true) ||
+    (event.keyCode === 86 && event.ctrlKey === true) ||
+    (event.keyCode === 88 && event.ctrlKey === true) ||
+    // Autoriser: flèches gauche, droite, début, fin
+    (event.keyCode >= 35 && event.keyCode <= 40)
+  ) {
+    // Ne rien faire : on laisse la touche être traitée
+    return;
+  }
+  // Empêcher tout autre caractère s'il n'est pas un chiffre (0-9)
+  if (
+    (event.shiftKey || event.keyCode < 48 || event.keyCode > 57) &&
+    (event.keyCode < 96 || event.keyCode > 105)
+  ) {
     event.preventDefault();
   }
 });
-
 
 /**
  * C'est la fonction qui permet de valider les boutons radio
@@ -307,7 +316,7 @@ function afterSubmit() {
 }
 
 /**
- * Initialisation 
+ * Initialisation
  */
 
 function init() {

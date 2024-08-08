@@ -212,22 +212,22 @@ function checkValidationQuantity() {
  */
 quantityInput.addEventListener("keydown", (event) => {
   if (
-    [8, 46, 9, 27, 13].indexOf(event.keyCode) !== -1 ||
+    [8, 46, 9, 27, 13].indexOf(event.key) !== -1 ||
     // Autoriser: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-    (event.keyCode === 65 && event.ctrlKey === true) ||
-    (event.keyCode === 67 && event.ctrlKey === true) ||
-    (event.keyCode === 86 && event.ctrlKey === true) ||
-    (event.keyCode === 88 && event.ctrlKey === true) ||
+    (event.key === 65 && event.ctrlKey === true) ||
+    (event.key === 67 && event.ctrlKey === true) ||
+    (event.key === 86 && event.ctrlKey === true) ||
+    (event.key === 88 && event.ctrlKey === true) ||
     // Autoriser: flèches gauche, droite, début, fin
-    (event.keyCode >= 35 && event.keyCode <= 40)
+    (event.key >= 35 && event.key <= 40)
   ) {
     // Ne rien faire : on laisse la touche être traitée
     return;
   }
   // Empêcher tout autre caractère s'il n'est pas un chiffre (0-9)
   if (
-    (event.shiftKey || event.keyCode < 48 || event.keyCode > 57) &&
-    (event.keyCode < 96 || event.keyCode > 105)
+    (event.shiftKey || event.key < 48 || event.key > 57) &&
+    (event.key < 96 || event.key > 105)
   ) {
     event.preventDefault();
   }

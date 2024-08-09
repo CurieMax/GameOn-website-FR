@@ -1,4 +1,6 @@
-// DOM Elements
+/**
+ * Déclaration des variables
+ */
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
@@ -15,6 +17,9 @@ const confirmationCloseBtn = document.getElementById("closeBtn");
 const affichageHero = document.querySelector(".hero-section");
 const bodyElement = document.body;
 
+/**
+ * C'est la fonction qui permet d'ouvrir le menu
+ */
 function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -85,6 +90,7 @@ const hideErrorMessage = (ele) => {
 
 function checkValidationFirstName() {
   const isvalidFirstName = (firstName) => {
+    // Détails de l'expression régulière du prénom
     const reTest = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/;
     return reTest.test(String(firstName).toLowerCase());
   };
@@ -115,6 +121,7 @@ function checkValidationFirstName() {
 
 function checkValidationLastName() {
   const isvalidLastName = (lastName) => {
+    // Détails de l'expression régulière du nom
     const reTest = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/;
     return reTest.test(String(lastName).toLowerCase());
   };
@@ -143,6 +150,7 @@ function checkValidationLastName() {
 
 function checkValidationEmail() {
   const isvalidEmail = (email) => {
+    // Détails de l'expression régulière d'email
     const reTest =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return reTest.test(String(email).toLowerCase());
@@ -212,6 +220,7 @@ function checkValidationQuantity() {
  */
 quantityInput.addEventListener("keydown", (event) => {
   if (
+    // Autoriser: Backspace, Delete, Tabulation, Enter, espace
     [8, 46, 9, 27, 13].indexOf(event.key) !== -1 ||
     // Autoriser: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
     (event.key === 65 && event.ctrlKey === true) ||
@@ -239,7 +248,9 @@ quantityInput.addEventListener("keydown", (event) => {
  */
 function checkValidationCheckbox() {
   const radios = document.getElementsByName("location");
+  // Parcourir les boutons radio
   for (let i = 0; i < radios.length; i++) {
+    // Si un bouton radio est selectionne
     if (radios[i].checked) {
       hideErrorMessage(radios[i]);
       return true;
@@ -316,7 +327,7 @@ function afterSubmit() {
 }
 
 /**
- * Initialisation
+ * C'est la fonction qui sera appelée à l'initialisation
  */
 
 function init() {
@@ -344,4 +355,7 @@ function init() {
   });
 }
 
+/**
+ * C'est la fonction qui sera appelée à l'initialisation
+ */
 init();

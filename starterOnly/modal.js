@@ -205,11 +205,9 @@ function checkValidationBirthdate() {
  */
 function checkValidationQuantity() {
   const validationQuantity = quantityInput.value.trim();
-  if (validationQuantity === "") {
-    showErrorMessage(quantityInput, "Veuillez renseigner un nombre");
+  if (isNaN(validationQuantity) || validationQuantity <= 0) {
+    showErrorMessage(quantityInput, "Veuillez renseigner un nombre valide");
     return false;
-  } else {
-    hideErrorMessage(quantityInput);
   }
 
   return true;
@@ -219,25 +217,12 @@ function checkValidationQuantity() {
  * Permet l'écoute de l'input pour autoriser uniquement des chiffres
  */
 quantityInput.addEventListener("keydown", (event) => {
-  if (
-    // Autoriser: Backspace, Delete, Tabulation, Enter, espace
-    [8, 46, 9, 27, 13].indexOf(event.key) !== -1 ||
-    // Autoriser: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-    (event.key === 65 && event.ctrlKey === true) ||
-    (event.key === 67 && event.ctrlKey === true) ||
-    (event.key === 86 && event.ctrlKey === true) ||
-    (event.key === 88 && event.ctrlKey === true) ||
-    // Autoriser: flèches gauche, droite, début, fin
-    (event.key >= 35 && event.key <= 40)
-  ) {
-    // Ne rien faire : on laisse la touche être traitée
-    return;
-  }
-  // Empêcher tout autre caractère s'il n'est pas un chiffre (0-9)
-  if (
-    (event.shiftKey || event.key < 48 || event.key > 57) &&
-    (event.key < 96 || event.key > 105)
-  ) {
+  const allowedKeys = ["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"];
+  const isNumber = event.key >= "0" && event.key <= "9";
+  const isAllowed = allowedKeys.includes(event.key);
+
+  // Si ce n'est pas un chiffre ou une touche autorisée, empêcher l'entrée
+  if (!isNumber && !isAllowed) {
     event.preventDefault();
   }
 });

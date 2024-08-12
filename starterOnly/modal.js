@@ -210,6 +210,7 @@ function checkValidationQuantity() {
     return false;
   }
 
+  hideErrorMessage(quantityInput);
   return true;
 }
 
@@ -224,6 +225,7 @@ quantityInput.addEventListener("keydown", (event) => {
   // Si ce n'est pas un chiffre ou une touche autorisée, empêcher l'entrée
   if (!isNumber && !isAllowed) {
     event.preventDefault();
+    
   }
 });
 
